@@ -1,0 +1,17 @@
+{
+  "name": "adapt-contrib-ios-frameset",
+  "version": "0.0.1",
+  "framework": "^2.0.0",
+  "homepage": "https://github.com/learningpool/adapt-contrib-ios-frameset",
+  "issues": "https://github.com/learningpool/adapt-contrib-ios-frameset/issues",
+  "displayName" : "iOS frameset fix",
+  "extension" : "ios-frameset",
+  "description": "Required extension for iOS devices when content will be rendered inside a FRAME element",
+  "main": "/js/adapt-contrib-ios-frameset.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-extension"
+  ],
+  "license": "GPLv3",
+  "targetAttribute": "_ios_frameset"
+}
