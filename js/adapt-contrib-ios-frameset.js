@@ -4,6 +4,8 @@
 */
 $(function() {
 	if (window.frameElement && window.frameElement.nodeName == "FRAME") {
+		$('html').addClass('frameset');
+		
 		if (!window.top.document.querySelector("meta[name=viewport]")) {
 			$("head", window.top.document).append('<meta name="viewport" content="initial-scale=1.0, user-scalable=yes">');
 		} else {
