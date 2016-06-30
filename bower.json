@@ -1,12 +1,12 @@
 {
   "name": "adapt-contrib-ios-frameset",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "framework": "^2.0.0",
   "homepage": "https://github.com/learningpool/adapt-contrib-ios-frameset",
   "issues": "https://github.com/learningpool/adapt-contrib-ios-frameset/issues",
-  "displayName" : "iOS frameset fix",
+  "displayName" : "Responsive Embedded Helper",
   "extension" : "ios-frameset",
-  "description": "Required extension for iOS devices when content will be rendered inside a FRAME element",
+  "description": "Extension to allow Adapt content to behave responsively when rendered inside FRAME or IFRAME containers",
   "main": "/js/adapt-contrib-ios-frameset.js",
   "keywords": [
     "adapt-plugin",
