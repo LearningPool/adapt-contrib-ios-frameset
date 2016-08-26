@@ -12,7 +12,10 @@ $(function() {
             $("meta[name='viewport']", window.top.document).attr("content", "initial-scale=1.0, user-scalable=yes");
         }
 
+        $('html').addClass('frameset');
+        
         if ($('html').hasClass('touch')) {
+
             // Subsequent styling for body to enable scrolling
             $('body').css({
                 'overflow-x': 'auto',
