@@ -36,7 +36,8 @@ define(function(require) {
 
     Adapt.on('pageView:ready', function(page) {
         // Fix for external media sources which use iFrames, e.g. Vimeo, YouTube.
-        if ($('html').hasClass("OS-ios")) {
+        var $html = $('html');
+        if ($html.hasClass("iphone") || $html.hasClass("ipad")) {
             _.each($(".media-widget.external-source"), function(item) {
                 var $item = $(item);
                 var dataId = $item.find('.mejs-container').attr('id');
