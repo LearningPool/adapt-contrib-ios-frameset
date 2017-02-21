@@ -52,15 +52,6 @@ define(function(require) {
                 // Add a <div> to allow scrolling.
                 $item.find('.mejs-mediaelement').prepend('<div class="ios-media-scroller" data-id="' + dataId + '" data-type="' + type +'"></div>');
 
-                $('.ios-media-scroller').css({
-                    'height': '100%',
-                    'left': '0',
-                    'position': 'absolute',
-                    'top': '0',
-                    'width': '100%',
-                    'cursor': 'pointer',    // This is required for iOS event bubbling!
-                    'z-index': '1'
-                });
             });
 
             // iOS demands that the event handlers are bound individually.
