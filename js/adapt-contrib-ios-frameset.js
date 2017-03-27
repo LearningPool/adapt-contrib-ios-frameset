@@ -38,16 +38,10 @@ define(function(require) {
         // Fix for external media sources which use iFrames, e.g. Vimeo, YouTube.
         var $html = $('html');
         if ($html.hasClass("iphone") || $html.hasClass("ipad")) {
-            _.each($(".media-widget.external-source"), function(item) {
+            _.each($(".media-widget.external-source.video-vimeo"), function(item) {
                 var $item = $(item);
                 var dataId = $item.find('.mejs-container').attr('id');
-                var type = '';
-
-                if ($item.hasClass('video-youtube')) {
-                    type = 'youtube';
-                } else if ($item.hasClass('video-vimeo')) {
-                    type = 'vimeo';
-                }
+                var type = 'vimeo';
 
                 // Add a <div> to allow scrolling.
                 $item.find('.mejs-mediaelement').prepend('<div class="ios-media-scroller" data-id="' + dataId + '" data-type="' + type +'"></div>');
@@ -61,12 +55,9 @@ define(function(require) {
                     var type = event.currentTarget.dataset.type;
 
                     switch (type) {
-                        case 'youtube':
-                            $('#' + id).find('.mejs-button').click();
-                            break;
                         case 'vimeo':
-                        var player = $f($(event.currentTarget).siblings().find('iframe')[0]);
-                        player.api("play");
+                            var player = $f($(event.currentTarget).siblings().find('iframe')[0]);
+                            player.api("play");
                     }
                 });
             });
