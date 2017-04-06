@@ -27,6 +27,15 @@ $(function() {
             });
         }
 
+        if ($('html').hasClass('trickle')) { // trickle styling in iframe/frameset
+
+            // Subsequent styling for body to enable scrolling
+            $('body').css({
+                'height': 'auto',
+                'min-height': '100vh',
+            });
+        }
+
     }
 });
 
