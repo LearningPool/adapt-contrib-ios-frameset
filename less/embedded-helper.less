@@ -27,3 +27,45 @@ html.OS-ios {
         height: 100% !important; // needed to override JS property
     }
 }
+
+html.ios-scroll-fix {
+    position: absolute;
+    height:100%;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+    body {
+        height: 100% !important;
+        overflow-y: hidden;
+    }
+
+    .scrolling-container {
+        height:100%;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .scrolling-inner.body {
+        -webkit-transform: translate3d(0,0,0);
+    }
+
+    .navigation-container {
+        position: fixed;
+        overflow-y: scroll;
+        z-index: 500;
+        width: 100%;
+        padding-bottom: 20px;
+        .navigation {
+            position:relative !important;
+        }
+    }
+}
+
+html.ios-scroll-fix.trickle {
+    .trickle-full-width {
+        .trickle-button-inner {
+            position: absolute !important;
+        }
+    }
+}
