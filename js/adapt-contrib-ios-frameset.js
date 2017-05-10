@@ -39,12 +39,11 @@ $(function() {
 });
 
 define([
-    'core/js/adapt',
-    'core/js/libraries/bowser'
-], function(Adapt, Bowser) {
+    'core/js/adapt'
+], function(Adapt) {
 
     // Check if IOS specific IFRAME handling is required.
-    if (Bowser.os == 'ios' && window.frameElement.nodeName == "IFRAME") {
+    if (Adapt.device.OS == 'ios' && window.frameElement && window.frameElement.nodeName == "IFRAME") {
         Adapt.on("app:dataReady", function() {
             // Fix for iOS fixed position elements/Trickle.
             $("html").addClass("ios-scroll-fix");
