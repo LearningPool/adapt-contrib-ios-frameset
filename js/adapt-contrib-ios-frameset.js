@@ -42,84 +42,89 @@ define([
     'core/js/adapt'
 ], function(Adapt) {
 
-    // Check if IOS specific IFRAME handling is required.
-    if (Adapt.device.OS == 'ios' && window.frameElement && window.frameElement.nodeName == "IFRAME") {
-        Adapt.on("app:dataReady", function() {
-            // Fix for iOS fixed position elements/Trickle.
-            $("html").addClass("ios-scroll-fix");
+    if (window.frameElement && window.frameElement.nodeName == "IFRAME") {
+        // Check if IOS specific IFRAME handling is required.
+        if (Adapt.device.OS == 'ios' && window.frameElement && window.frameElement.nodeName == "IFRAME") {
+            Adapt.on("app:dataReady", function() {
+                // Fix for iOS fixed position elements/Trickle.
+                $("html").addClass("ios-scroll-fix");
 
-            // Make fake HTML and BODY tags.
-            var $scrollingContainer = $('<div class="scrolling-container"><div class="scrolling-inner body"></div></div>');
-            var $scrollingInner = $scrollingContainer.find(".scrolling-inner");
-            
-            $("body").append($scrollingContainer);
-
-            //move wrapper inside fake tags
-            $("#wrapper").appendTo($scrollingInner);
-            
-            // Fix scrolling.
-            var originalElementScrollTo = $.fn.scrollTo;
-
-            $.fn.scrollTo = function(target, duration, settings) {
-                if (this[0] === window || this[0] === document.body) {
-                    return originalElementScrollTo.apply($(".scrolling-container"), arguments);
-                } else {
-                    return originalElementScrollTo.apply(this, arguments);
-                }
-            };
-
-            var originalScrollTo = $.scrollTo;
-
-            $.scrollTo = function(target, duration, settings) {
-                return originalElementScrollTo.apply($(".scrolling-container"), arguments);
-            };
-
-            var originalScrollTop = $.fn.scrollTop;
-
-            $.fn.scrollTop = function() {
-                if (this[0] === window || this[0] === document.body) {
-                    return originalScrollTop.apply($(".scrolling-container"), arguments);
-                } else {
-                    return originalScrollTop.apply(this, arguments);
-                }
-            };
-
-            window.scrollTo = function(x,y) {
-                $(".scrolling-container")[0].scrollTop = y || 0;
-                $(".scrolling-container")[0].scrollLeft = x || 0;
-            };
-
-            $(".scrolling-container").on("scroll", function() {
-                $(window).scroll();
-            });
-
-            // Fix JQuery offset.
-            var jqueryOffset = $.fn.offset;
-
-            $.fn.offset = function() {
-                var offset = jqueryOffset.call(this);
-                var $stack = this.parents().add(this);
-                var $scrollParents = $stack.filter(".scrolling-container");
-                $scrollParents.each(function(index, item) {
-                    var $item = $(item);
-                    var scrolltop = parseInt($item.scrollTop());
-                    var scrollleft = parseInt($item.scrollLeft());
+                // Make fake HTML and BODY tags.
+                var $scrollingContainer = $('<div class="scrolling-container"><div class="scrolling-inner body"></div></div>');
+                var $scrollingInner = $scrollingContainer.find(".scrolling-inner");
                 
-                    offset.top += scrolltop;
-                    offset.left += scrollleft;
+                $("body").append($scrollingContainer);
+
+                //move wrapper inside fake tags
+                $("#wrapper").appendTo($scrollingInner);
+                
+                // Fix scrolling.
+                var originalElementScrollTo = $.fn.scrollTo;
+
+                $.fn.scrollTo = function(target, duration, settings) {
+                    if (this[0] === window || this[0] === document.body) {
+                        return originalElementScrollTo.apply($(".scrolling-container"), arguments);
+                    } else {
+                        return originalElementScrollTo.apply(this, arguments);
+                    }
+                };
+
+                var originalScrollTo = $.scrollTo;
+
+                $.scrollTo = function(target, duration, settings) {
+                    return originalElementScrollTo.apply($(".scrolling-container"), arguments);
+                };
+
+                var originalScrollTop = $.fn.scrollTop;
+
+                $.fn.scrollTop = function() {
+                    if (this[0] === window || this[0] === document.body) {
+                        return originalScrollTop.apply($(".scrolling-container"), arguments);
+                    } else {
+                        return originalScrollTop.apply(this, arguments);
+                    }
+                };
+
+                window.scrollTo = function(x,y) {
+                    $(".scrolling-container")[0].scrollTop = y || 0;
+                    $(".scrolling-container")[0].scrollLeft = x || 0;
+                };
+
+                $(".scrolling-container").on("scroll", function() {
+                    $(window).scroll();
                 });
 
-                return offset;
-            };
-            
-            // Move navigation to outside the scrolling area.
-            var $navigationContainer = $('<div class="navigation-container"></div>');
-            $("body").prepend($navigationContainer);
+                // Fix JQuery offset.
+                var jqueryOffset = $.fn.offset;
 
-            Adapt.once("adapt:initialize", function() {
-                $(".navigation").prependTo($navigationContainer);
+                $.fn.offset = function() {
+                    var offset = jqueryOffset.call(this);
+                    var $stack = this.parents().add(this);
+                    var $scrollParents = $stack.filter(".scrolling-container");
+                    $scrollParents.each(function(index, item) {
+                        var $item = $(item);
+                        var scrolltop = parseInt($item.scrollTop());
+                        var scrollleft = parseInt($item.scrollLeft());
+                    
+                        offset.top += scrolltop;
+                        offset.left += scrollleft;
+                    });
+
+                    return offset;
+                };
+                
+                // Move navigation to outside the scrolling area.
+                var $navigationContainer = $('<div class="navigation-container"></div>');
+                $("body").prepend($navigationContainer);
+
+                Adapt.once("adapt:initialize", function() {
+                    $(".navigation").prependTo($navigationContainer);
+                });
             });
-        });
+        } else if (Adapt.device.OS == 'android') {
+             // Fix for Android fixed position elements/Trickle.
+            $("html").addClass("android-scroll-fix");
+        }
     }
     
     Adapt.on('pageView:ready', function(page) {
